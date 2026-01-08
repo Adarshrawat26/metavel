@@ -1,3 +1,4 @@
+import React from "react";
 import {
     Calendar,
     ShieldAlert,
@@ -6,11 +7,40 @@ import {
 
 export function ComplyModule({ onNavigate }: { onNavigate: (page: any) => void }) {
   return (
-    <div className="flex flex-col h-full bg-white overflow-hidden font-['Nunito_Sans'] text-black">
-      <div className="flex-1 overflow-y-auto p-6">
-        <div className="max-w-[1200px] mx-auto space-y-8">
-          
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+    <div className="p-6 space-y-8 animate-in fade-in duration-1000 max-w-[1200px] mx-auto bg-white text-black font-['Nunito_Sans']">
+      {/* Header */}
+      <div className="flex justify-between items-start">
+        <div className="space-y-1">
+          <h1 className="text-3xl font-black text-black tracking-tighter uppercase">Compliance</h1>
+          <p className="text-black/40 font-bold uppercase tracking-widest text-[13px]">Risk Assessment & Obligations</p>
+        </div>
+        <div className="flex gap-3">
+          <button className="flex items-center gap-2 px-4 py-1.5 bg-black/5 border border-black/5 rounded text-[12px] font-black uppercase tracking-widest hover:bg-black/10 transition-all">
+            Filters
+          </button>
+          <button className="flex items-center gap-2 px-4 py-1.5 bg-[#FF7A45] text-white rounded text-[12px] font-black uppercase tracking-widest hover:bg-[#F26636] transition-all">
+            Registry
+          </button>
+        </div>
+      </div>
+
+      {/* KPI Row */}
+      <div className="grid grid-cols-5 gap-4 border-y border-black/5 py-6">
+        {[
+          { label: "Risk Index", value: "72" },
+          { label: "Active Obligations", value: "8" },
+          { label: "Due Today", value: "2" },
+          { label: "Overdue", value: "1" },
+          { label: "Compliance Rate", value: "94%" },
+        ].map((kpi, i) => (
+          <div key={i} className="space-y-1">
+            <p className="text-[12px] font-black text-black/30 uppercase tracking-[0.15em]">{kpi.label}</p>
+            <h3 className="text-2xl font-black text-black">{kpi.value}</h3>
+          </div>
+        ))}
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             {/* Risk Panel */}
             <div className="lg:col-span-1 space-y-6">
               <div className="border border-black/5 rounded p-5 space-y-5">
@@ -72,62 +102,63 @@ export function ComplyModule({ onNavigate }: { onNavigate: (page: any) => void }
 
             {/* Obligations */}
             <div className="lg:col-span-2 space-y-6">
-              <div className="border border-black/5 rounded">
-                <div className="p-5 border-b border-black/5 flex justify-between items-center">
-                  <h2 className="text-lg font-black uppercase tracking-tight">Obligations</h2>
-                  <div className="flex gap-2">
-                    <button className="px-4 py-1.5 bg-black/5 rounded text-[11px] font-black uppercase tracking-widest">Filters</button>
-                    <button className="px-4 py-1.5 bg-[#FF7A45] text-white rounded text-[11px] font-black uppercase tracking-widest">Registry</button>
+              <div className="border border-black/5 rounded-lg overflow-hidden bg-white">
+                <div className="p-6 border-b border-black/5 flex justify-between items-center bg-white">
+                  <h2 className="text-xl font-black uppercase tracking-tight text-black">Obligations</h2>
+                  <div className="flex gap-3">
+                    <button className="px-5 py-2.5 bg-black/5 border border-black/10 rounded-lg text-[12px] font-black uppercase tracking-widest text-black/60 hover:bg-black/10 hover:text-black transition-all">
+                      Filters
+                    </button>
+                    <button className="px-5 py-2.5 bg-[#FF7A45] text-white rounded-lg text-[12px] font-black uppercase tracking-widest hover:bg-[#F26636] transition-all shadow-sm hover:shadow-md">
+                      Registry
+                    </button>
                   </div>
                 </div>
                 
                 <div className="overflow-x-auto">
-                  <table className="w-full text-left">
-                    <thead>
-                      <tr className="text-[12px] font-black text-black/20 uppercase tracking-[0.15em] border-b border-black/5">
-                        <th className="px-5 py-4">Requirement</th>
-                        <th className="px-5 py-4">Due</th>
-                        <th className="px-5 py-4">Lead</th>
-                        <th className="px-5 py-4">Status</th>
-                        <th className="px-5 py-4"></th>
+                  <table className="w-full">
+                    <thead className="bg-black/[0.02] border-b border-black/5">
+                      <tr>
+                        <th className="px-6 py-4 text-left text-[12px] font-black text-black/30 uppercase tracking-[0.15em]">Requirement</th>
+                        <th className="px-6 py-4 text-left text-[12px] font-black text-black/30 uppercase tracking-[0.15em]">Due</th>
+                        <th className="px-6 py-4 text-left text-[12px] font-black text-black/30 uppercase tracking-[0.15em]">Lead</th>
+                        <th className="px-6 py-4 text-left text-[12px] font-black text-black/30 uppercase tracking-[0.15em]">Status</th>
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-black/5">
                       {[
-                        { name: "Safety Audit", due: "Jan 15, 2026", owner: "Mike R.", status: "Pending" },
-                        { name: "Price Review", due: "Feb 01, 2026", owner: "Sarah J.", status: "Scheduled" },
-                        { name: "Performance Bond", due: "Dec 30, 2025", owner: "Vendor", status: "Closed" },
-                        { name: "Emissions Report", due: "Mar 31, 2026", owner: "ESG Team", status: "Scheduled" },
-                        { name: "Site Training", due: "Jan 05, 2026", owner: "John K.", status: "Overdue" },
+                        { name: "Safety Audit", section: "Section 12.4", policy: "Corporate Policy", due: "Jan 15, 2026", owner: "Mike R.", status: "Pending", statusColor: "bg-black/5 text-black/40" },
+                        { name: "Price Review", section: "Section 12.4", policy: "Corporate Policy", due: "Feb 01, 2026", owner: "Sarah J.", status: "Scheduled", statusColor: "bg-black/5 text-black/40" },
+                        { name: "Performance Review", section: "Section 8.2", policy: "Vendor Management", due: "Mar 15, 2026", owner: "Emma W.", status: "Scheduled", statusColor: "bg-black/5 text-black/40" },
+                        { name: "Emissions Report", section: "Section 15.1", policy: "ESG Compliance", due: "Mar 31, 2026", owner: "ESG Team", status: "Scheduled", statusColor: "bg-black/5 text-black/40" },
+                        { name: "Site Training", section: "Section 7.3", policy: "Safety Protocol", due: "Jan 05, 2026", owner: "John K.", status: "Overdue", statusColor: "bg-red-500/10 text-red-600" },
+                        { name: "Insurance Update", section: "Section 11.2", policy: "Risk Management", due: "Jan 20, 2026", owner: "Robert C.", status: "Pending", statusColor: "bg-black/5 text-black/40" },
+                        { name: "Compliance Audit", section: "Section 9.5", policy: "Regulatory", due: "Feb 10, 2026", owner: "Sarah M.", status: "Scheduled", statusColor: "bg-black/5 text-black/40" },
                       ].map((ob, i) => (
-                        <tr key={i} className="hover:bg-black/[0.01] transition-colors group cursor-pointer">
-                          <td className="px-10 py-8">
-                            <p className="text-[16px] font-black text-black uppercase tracking-widest group-hover:opacity-60 transition-opacity">{ob.name}</p>
-                            <p className="text-[16px] text-black/20 font-black mt-2 uppercase tracking-widest">Section 12.4 • Corporate Policy</p>
-                          </td>
-                          <td className="px-10 py-8">
-                            <div className="flex items-center gap-3 text-black/40 text-[15px] font-black uppercase tracking-widest tabular-nums">
-                              <Calendar className="w-3.5 h-3.5" />
-                              {ob.due}
+                        <tr key={i} className="hover:bg-black/[0.02] transition-colors group cursor-pointer">
+                          <td className="px-6 py-5">
+                            <div className="space-y-1.5">
+                              <p className="text-[14px] font-black text-black uppercase tracking-widest leading-tight">{ob.name}</p>
+                              <div className="flex items-center gap-2 text-[12px] text-black/30 font-bold uppercase tracking-widest">
+                                <span>{ob.section}</span>
+                                <span>•</span>
+                                <span>{ob.policy}</span>
+                              </div>
                             </div>
                           </td>
-                          <td className="px-10 py-8 text-[15px] font-black text-black/40 uppercase tracking-widest">
-                            {ob.owner}
+                          <td className="px-6 py-5">
+                            <div className="flex items-center gap-2.5 text-black/50 text-[13px] font-black uppercase tracking-widest tabular-nums">
+                              <Calendar className="w-4 h-4 text-black/30" />
+                              <span>{ob.due}</span>
+                            </div>
                           </td>
-                          <td className="px-10 py-8">
-                            <span className={`text-[16px] font-black uppercase tracking-[0.2em] px-2 py-0.5 rounded-sm ${
-                              ob.status === "Overdue" ? "bg-[#FF7A45] text-white" : "bg-black/5 text-black/30"
-                            }`}>
+                          <td className="px-6 py-5">
+                            <p className="text-[13px] font-black text-black/50 uppercase tracking-widest">{ob.owner}</p>
+                          </td>
+                          <td className="px-6 py-5">
+                            <span className={`inline-flex items-center px-3 py-1 rounded-md text-[12px] font-black uppercase tracking-widest ${ob.statusColor}`}>
                               {ob.status}
                             </span>
-                          </td>
-                          <td className="px-10 py-8 text-right">
-                            <button 
-                              onClick={() => onNavigate("review")}
-                              className="text-[16px] font-black text-black hover:opacity-40 uppercase tracking-widest"
-                            >
-                              Detail
-                            </button>
                           </td>
                         </tr>
                       ))}
@@ -137,8 +168,6 @@ export function ComplyModule({ onNavigate }: { onNavigate: (page: any) => void }
               </div>
             </div>
           </div>
-        </div>
-      </div>
     </div>
   );
 }

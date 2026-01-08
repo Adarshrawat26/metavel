@@ -6,7 +6,7 @@ import {
     Send,
     X
 } from "lucide-react";
-import { useState } from "react";
+import React, { useState } from "react";
 import { toast } from "sonner";
 
 export function NegotiateModule({ onNavigate }: { onNavigate: (page: any) => void }) {
@@ -43,36 +43,39 @@ export function NegotiateModule({ onNavigate }: { onNavigate: (page: any) => voi
   return (
     <div className="h-full flex flex-col bg-white overflow-hidden font-['Nunito_Sans'] text-black">
       {/* Header */}
-      <header className="h-12 border-b border-black/5 flex items-center justify-between px-6 shrink-0">
+      <header className="border-b border-black/5 flex items-center justify-between px-6 py-4 shrink-0">
         <div className="flex items-center gap-4">
           <button onClick={() => onNavigate("contracts")} className="p-1.5 hover:bg-black/5 rounded transition-colors text-black/20 hover:text-black">
             <ArrowLeft className="w-3 h-3" />
           </button>
-          <div className="flex items-center gap-3">
-            <h2 className="text-xs font-black uppercase tracking-widest text-black">Negotiation: Global Steel MSA</h2>
-            <span className="px-2 py-0.5 bg-[#FF7A45] text-white rounded text-[12px] font-black uppercase tracking-[0.15em]">Round 3</span>
+          <div className="space-y-1">
+            <div className="flex items-center gap-3">
+              <h1 className="text-3xl font-black text-black tracking-tighter uppercase">Negotiate</h1>
+              <span className="px-2 py-0.5 bg-[#FF7A45] text-white rounded text-[12px] font-black uppercase tracking-[0.15em]">Round 3</span>
+            </div>
+            <p className="text-black/40 font-bold uppercase tracking-widest text-[13px]">Global Steel MSA • Contract Review</p>
           </div>
         </div>
 
-        <div className="flex items-center gap-4">
-          <div className="flex bg-black/5 rounded p-0.5">
+        <div className="flex items-center gap-3">
+          <div className="flex bg-black/5 border border-black/5 rounded p-0.5">
             <button 
               onClick={() => setActivePane("redline")}
-              className={`px-3 py-1 text-[12px] font-black uppercase tracking-widest rounded transition-all ${activePane === 'redline' ? 'bg-[#FF7A45] text-white shadow-sm' : 'text-black/40 hover:text-black'}`}
+              className={`px-3 py-1.5 text-[12px] font-black uppercase tracking-widest rounded transition-all ${activePane === 'redline' ? 'bg-[#FF7A45] text-white shadow-sm' : 'text-black/40 hover:text-black hover:bg-black/5'}`}
             >
               Editor
             </button>
             <button 
               onClick={() => setActivePane("status")}
-              className={`px-3 py-1 text-[12px] font-black uppercase tracking-widest rounded transition-all ${activePane === 'status' ? 'bg-[#FF7A45] text-white shadow-sm' : 'text-black/40 hover:text-black'}`}
+              className={`px-3 py-1.5 text-[12px] font-black uppercase tracking-widest rounded transition-all ${activePane === 'status' ? 'bg-[#FF7A45] text-white shadow-sm' : 'text-black/40 hover:text-black hover:bg-black/5'}`}
             >
               Status
             </button>
           </div>
-          <button className="flex items-center gap-1.5 px-3 py-1 border border-black/10 rounded text-[12px] font-black uppercase tracking-widest hover:bg-black/5 transition-all">
+          <button className="flex items-center gap-2 px-4 py-1.5 bg-black/5 border border-black/5 rounded text-[12px] font-black uppercase tracking-widest hover:bg-black/10 transition-all">
             <Download className="w-3 h-3" /> Export
           </button>
-          <button className="flex items-center gap-1.5 bg-[#FF7A45] text-white px-4 py-1.5 rounded text-[12px] font-black uppercase tracking-widest hover:bg-[#F26636] transition-all">
+          <button className="flex items-center gap-2 px-4 py-1.5 bg-[#FF7A45] text-white rounded text-[12px] font-black uppercase tracking-widest hover:bg-[#F26636] transition-all">
             <Send className="w-3 h-3" /> Transmit
           </button>
         </div>
@@ -187,7 +190,7 @@ export function NegotiateModule({ onNavigate }: { onNavigate: (page: any) => voi
             <div className="relative">
               <textarea 
                 rows={3}
-                placeholder="TYPE MESSAGE..."
+                placeholder="Type your negotiation message or clause change request..."
                 className="w-full bg-white border border-black/10 rounded p-4 text-[16px] font-bold outline-none focus:ring-1 focus:ring-black transition-all resize-none"
               />
               <button className="absolute right-4 bottom-4 p-2 bg-[#FF7A45] text-white rounded hover:bg-[#F26636] transition-colors">

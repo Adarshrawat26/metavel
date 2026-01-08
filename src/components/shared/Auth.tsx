@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Building2, Mail, Lock, Eye, EyeOff, ArrowLeft, CheckCircle2 } from "lucide-react";
+import { Mail, Lock, Eye, EyeOff, ArrowLeft, CheckCircle2 } from "lucide-react";
 import { motion } from "motion/react";
 
 interface AuthProps {
@@ -32,9 +32,6 @@ export function Auth({ onLogin }: AuthProps) {
             className="w-full max-w-sm space-y-12"
           >
             <div className="text-center space-y-4">
-              <div className="inline-flex items-center justify-center w-12 h-12 bg-black rounded mx-auto">
-                <Building2 className="w-6 h-6 text-white" />
-              </div>
               <div className="space-y-1">
                 <h1 className="text-2xl font-black text-black tracking-tighter uppercase">Metaval</h1>
                 <p className="text-black/30 font-black tracking-[0.2em] uppercase text-[16px]">Contract & Procurement</p>

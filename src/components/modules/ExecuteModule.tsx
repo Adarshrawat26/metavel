@@ -27,13 +27,13 @@ export function ExecuteModule({ onNavigate }: { onNavigate: (page: any) => void 
   ];
 
   return (
-    <div className="p-6 space-y-8 animate-in fade-in duration-1000 max-w-[1200px] mx-auto bg-white font-['Nunito_Sans'] text-black">
+    <div className="p-6 space-y-8 animate-in fade-in duration-1000 max-w-[1200px] mx-auto bg-white text-black font-['Nunito_Sans']">
       {view === "list" ? (
         <>
           <div className="flex justify-between items-start">
             <div className="space-y-1">
               <h1 className="text-3xl font-black text-black tracking-tighter uppercase">Execution</h1>
-              <p className="text-black/40 font-black uppercase tracking-widest text-[12px]">Digital Signature Lifecycle</p>
+              <p className="text-black/40 font-bold uppercase tracking-widest text-[13px]">Digital Signature Lifecycle</p>
             </div>
             <button 
               onClick={() => setView("prepare")}

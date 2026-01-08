@@ -8,7 +8,7 @@ import {
     Send,
     Trash2
 } from "lucide-react";
-import { useState } from "react";
+import React, { useState } from "react";
 import { toast } from "sonner";
 import { StageIndicator } from "../shared/StageIndicator";
 
@@ -24,16 +24,32 @@ export function ExitModule({ onNavigate }: { onNavigate: (page: any) => void }) 
       <StageIndicator currentStage={9} />
 
       <div className="flex-1 overflow-y-auto p-6">
-        <div className="max-w-4xl mx-auto space-y-8">
-          
-          <div className="flex flex-col items-center text-center space-y-3 max-w-2xl mx-auto">
-            <div className="p-3 bg-[#FF7A45] text-white rounded">
-              <LogOut className="w-8 h-8" />
-            </div>
+        <div className="max-w-[1200px] mx-auto space-y-8">
+          {/* Header */}
+          <div className="flex justify-between items-start">
             <div className="space-y-1">
               <h1 className="text-3xl font-black text-black tracking-tighter uppercase">Termination</h1>
-              <p className="text-black/40 font-black uppercase tracking-widest text-[12px]">Contract Exit & Handover Protocols</p>
+              <p className="text-black/40 font-bold uppercase tracking-widest text-[13px]">Contract Exit & Handover Protocols</p>
             </div>
+            <div className="flex gap-3">
+              <button className="flex items-center gap-2 px-4 py-1.5 bg-black/5 border border-black/5 rounded text-[12px] font-black uppercase tracking-widest hover:bg-black/10 transition-all">
+            Options
+          </button>
+        </div>
+          </div>
+
+          {/* KPI Row */}
+          <div className="grid grid-cols-3 gap-4 border-y border-black/5 py-6">
+            {[
+              { label: "Active Terminations", value: "3" },
+              { label: "Pending Handover", value: "1" },
+              { label: "Completed", value: "12" },
+            ].map((kpi, i) => (
+              <div key={i} className="space-y-1">
+                <p className="text-[12px] font-black text-black/30 uppercase tracking-[0.15em]">{kpi.label}</p>
+                <h3 className="text-2xl font-black text-black">{kpi.value}</h3>
+              </div>
+            ))}
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -51,7 +67,7 @@ export function ExitModule({ onNavigate }: { onNavigate: (page: any) => void }) 
                   : "bg-white border-black/5 text-black/40 hover:border-black/20"
                 }`}
               >
-                <div className={`p-1.5 rounded mb-3 w-fit ${exitType === type.id ? "bg-white text-black" : "bg-[#FF7A45] text-white"}`}>
+                <div className={`p-1.5 rounded mb-3 w-fit ${exitType === type.id ? "bg-white text-black" : type.id === "cause" ? "bg-amber-500 text-white" : "bg-[#FF7A45] text-white"}`}>
                   <type.icon className="w-4 h-4" />
                 </div>
                 <h3 className="text-[12px] font-black uppercase tracking-widest">{type.label}</h3>
@@ -116,7 +132,7 @@ export function ExitModule({ onNavigate }: { onNavigate: (page: any) => void }) 
                 </p>
                 <textarea 
                   className="w-full bg-white/5 border border-white/10 rounded p-3 text-[14px] font-bold text-white outline-none focus:ring-1 focus:ring-white transition-all resize-none"
-                  placeholder="EXPLANATION CODE..."
+                  placeholder="e.g., TERM-2026-001, BREACH-2026-002"
                   rows={3}
                 />
               </div>

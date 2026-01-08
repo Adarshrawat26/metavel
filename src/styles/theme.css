@@ -189,3 +189,42 @@ h1, h2, h3, h4, h5, h6 {
     font-weight: var(--font-weight-normal);
   }
 }
+
+@layer components {
+  /* Design System: Table */
+  .mv-table-container {
+    @apply w-full overflow-x-auto rounded border border-black/5 bg-white;
+  }
+
+  .mv-table {
+    @apply w-full text-left border-collapse;
+  }
+
+  .mv-table thead tr {
+    @apply border-b border-black/5 bg-black/[0.02];
+  }
+
+  .mv-table th {
+    @apply px-6 py-4 text-[12px] font-black text-black/30 uppercase tracking-[0.2em] whitespace-nowrap;
+  }
+
+  .mv-table tbody tr {
+    @apply border-b border-black/5 hover:bg-black/[0.02] transition-colors;
+  }
+
+  .mv-table tbody tr:last-child {
+    @apply border-b-0;
+  }
+
+  .mv-table td {
+    @apply px-6 py-5 align-top text-[15px] font-bold text-black/70;
+  }
+
+  .mv-table td strong {
+    @apply font-black text-black;
+  }
+
+  .mv-table-caption {
+    @apply mt-3 text-[12px] font-black text-black/30 uppercase tracking-[0.2em];
+  }
+}

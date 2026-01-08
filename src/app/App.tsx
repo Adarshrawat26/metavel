@@ -1,3 +1,4 @@
+import React from "react";
 import {
   Bell,
   Building2,
@@ -40,6 +41,18 @@ export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [currentPage, setCurrentPage] = useState<Page>("dashboard");
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [requestModuleInitialView, setRequestModuleInitialView] = useState<"list" | "new" | "detail" | "workflow" | "edit-chat" | undefined>(undefined);
+
+  const handleNavigate = (target: Page | { page: Page; initialView?: "list" | "new" | "detail" | "workflow" | "edit-chat" }) => {
+    if (typeof target === "object" && target.page === "requests" && target.initialView) {
+      setRequestModuleInitialView(target.initialView);
+      setCurrentPage("requests");
+    } else {
+      const page = typeof target === "string" ? target : target.page;
+      setRequestModuleInitialView(undefined);
+      setCurrentPage(page);
+    }
+  };
 
   if (!isLoggedIn) {
     return (
@@ -57,29 +70,29 @@ export default function App() {
 
   const renderPage = () => {
     switch (currentPage) {
-      case "dashboard": return <Dashboard onNavigate={setCurrentPage} />;
-      case "contracts": return <SearchModule onNavigate={setCurrentPage} />;
-      case "tender-ai": return <TenderAIModule onNavigate={setCurrentPage} />;
-      case "review": return <ReviewModule onNavigate={setCurrentPage} />;
-      case "library": return <VendorsModule onNavigate={setCurrentPage} />;
-      case "risk": return <ComplyModule onNavigate={setCurrentPage} />;
-      case "renewals": return <ReviewModule onNavigate={setCurrentPage} />;
-      case "audit": return <AnalyticsModule onNavigate={setCurrentPage} />;
+      case "dashboard": return <Dashboard onNavigate={handleNavigate} />;
+      case "contracts": return <SearchModule onNavigate={handleNavigate} />;
+      case "tender-ai": return <TenderAIModule onNavigate={handleNavigate} />;
+      case "review": return <ReviewModule onNavigate={handleNavigate} />;
+      case "library": return <VendorsModule onNavigate={handleNavigate} />;
+      case "risk": return <ComplyModule onNavigate={handleNavigate} />;
+      case "renewals": return <ReviewModule onNavigate={handleNavigate} />;
+      case "audit": return <AnalyticsModule onNavigate={handleNavigate} />;
       case "admin": return <Settings />;
-      case "managers": return <VendorsModule onNavigate={setCurrentPage} />;
-      case "calendar": return <Dashboard onNavigate={setCurrentPage} />;
+      case "managers": return <VendorsModule onNavigate={handleNavigate} />;
+      case "calendar": return <Dashboard onNavigate={handleNavigate} />;
       case "settings": return <Settings />;
-      case "requests": return <RequestModule onNavigate={setCurrentPage} />;
-      case "generate": return <GenerateModule onNavigate={setCurrentPage} />;
-      case "negotiate": return <NegotiateModule onNavigate={setCurrentPage} />;
-      case "approval": return <ApprovalModule onNavigate={setCurrentPage} />;
-      case "execute": return <ExecuteModule onNavigate={setCurrentPage} />;
-      case "search": return <SearchModule onNavigate={setCurrentPage} />;
-      case "comply": return <ComplyModule onNavigate={setCurrentPage} />;
-      case "exit": return <ExitModule onNavigate={setCurrentPage} />;
-      case "vendors": return <VendorsModule onNavigate={setCurrentPage} />;
-      case "analytics": return <AnalyticsModule onNavigate={setCurrentPage} />;
-      default: return <Dashboard onNavigate={setCurrentPage} />;
+      case "requests": return <RequestModule onNavigate={handleNavigate} initialView={requestModuleInitialView} />;
+      case "generate": return <GenerateModule onNavigate={handleNavigate} />;
+      case "negotiate": return <NegotiateModule onNavigate={handleNavigate} />;
+      case "approval": return <ApprovalModule onNavigate={handleNavigate} />;
+      case "execute": return <ExecuteModule onNavigate={handleNavigate} />;
+      case "search": return <SearchModule onNavigate={handleNavigate} />;
+      case "comply": return <ComplyModule onNavigate={handleNavigate} />;
+      case "exit": return <ExitModule onNavigate={handleNavigate} />;
+      case "vendors": return <VendorsModule onNavigate={handleNavigate} />;
+      case "analytics": return <AnalyticsModule onNavigate={handleNavigate} />;
+      default: return <Dashboard onNavigate={handleNavigate} />;
     }
   };
 
@@ -102,14 +115,9 @@ export default function App() {
         {/* Brand Section */}
         <div className="p-8 flex items-center justify-between">
           {isSidebarOpen ? (
-            <div className="flex items-center gap-3">
-              <div className="w-8 h-8 bg-black rounded flex items-center justify-center shrink-0">
-                <Building2 className="w-5 h-5 text-white" />
-              </div>
-              <div className="flex flex-col">
-                <span className="font-bold text-black tracking-tight text-base">Metaval</span>
-                <span className="text-[10px] text-black/40 font-bold tracking-widest uppercase">Contract & Proc</span>
-              </div>
+            <div className="flex flex-col">
+              <span className="font-bold text-black tracking-tight text-xl">Metaval</span>
+              <span className="text-xs text-black/40 font-bold tracking-widest uppercase">Contract & Proc</span>
             </div>
           ) : (
             <div className="w-8 h-8 bg-black rounded flex items-center justify-center mx-auto">
@@ -153,10 +161,10 @@ export default function App() {
           </button>
           <button 
             onClick={handleLogout}
-            className="w-full flex items-center gap-3 px-4 py-2 rounded text-black/30 hover:text-black hover:bg-black/5 transition-all"
+            className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-black/40 hover:text-black hover:bg-black/5 transition-all group border border-transparent hover:border-black/10"
           >
-            <LogOut className="w-4 h-4 shrink-0" />
-            {isSidebarOpen && <span className="text-sm font-medium">Logout</span>}
+            <LogOut className="w-4 h-4 shrink-0 text-black/30 group-hover:text-black transition-colors" />
+            {isSidebarOpen && <span className="text-[12px] font-black uppercase tracking-widest">Logout</span>}
           </button>
         </div>
       </aside>
@@ -164,45 +172,45 @@ export default function App() {
       {/* Main Content */}
       <main className="flex-1 flex flex-col min-w-0 overflow-hidden bg-white">
         {/* Topbar */}
-        <header className="h-16 border-b border-black/5 flex items-center justify-between px-10 shrink-0 z-10">
-          <div className="flex items-center gap-12 flex-1">
+        <header className="h-20 border-b border-black/5 bg-white flex items-center justify-between px-8 shrink-0 z-10 sticky top-0 backdrop-blur-sm bg-white/95">
+          <div className="flex items-center gap-8 flex-1 min-w-0">
             {/* Breadcrumbs */}
-            <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-black/30">
-              <span>Metaval</span>
-              <ChevronRight className="w-3 h-3" />
-              <span className="text-black">{getPageTitle()}</span>
+            <div className="flex items-center gap-2.5 text-[11px] font-black uppercase tracking-[0.15em] text-black/40 shrink-0">
+              <span className="hover:text-black transition-colors cursor-pointer">Metaval</span>
+              <ChevronRight className="w-3 h-3 text-black/20" />
+              <span className="text-black font-black">{getPageTitle()}</span>
             </div>
 
             {/* Search */}
-            <div className="flex items-center flex-1 max-w-md relative">
-              <Search className="w-3.5 h-3.5 text-black/20 absolute left-3" />
+            <div className="flex items-center flex-1 max-w-lg relative min-w-0">
+              <Search className="w-4 h-4 text-black/30 absolute left-4 pointer-events-none" />
               <input 
                 type="text" 
-                placeholder="Search..." 
-                className="w-full bg-black/5 border-none rounded py-1.5 pl-9 pr-4 text-xs focus:ring-1 focus:ring-black focus:bg-white transition-all outline-none text-black"
+                placeholder="Search contracts, documents, or users..." 
+                className="w-full bg-black/5 border border-transparent rounded-lg py-2.5 pl-11 pr-4 text-sm font-medium focus:ring-2 focus:ring-[#FF7A45]/20 focus:border-[#FF7A45] focus:bg-white transition-all outline-none text-black placeholder:text-black/30"
               />
             </div>
           </div>
 
-          <div className="flex items-center gap-6 ml-4">
-            <button className="flex items-center gap-2 bg-[#FF7A45] text-white px-4 py-1.5 rounded text-xs font-bold hover:bg-[#F26636] transition-all">
-              <Plus className="w-3.5 h-3.5" />
+          <div className="flex items-center gap-4 ml-6 shrink-0">
+            <button className="flex items-center gap-2 bg-[#FF7A45] text-white px-5 py-2.5 rounded-lg text-[12px] font-black uppercase tracking-widest hover:bg-[#F26636] transition-all shadow-sm hover:shadow-md">
+              <Plus className="w-4 h-4" />
               <span>New</span>
             </button>
 
-            <div className="flex items-center gap-4">
-              <button className="relative p-2 text-black/20 hover:text-black hover:bg-black/5 rounded transition-all">
-                <Bell className="w-4 h-4" />
-                <span className="absolute top-2 right-2 w-1.5 h-1.5 bg-black rounded-full border border-white"></span>
+            <div className="flex items-center gap-3">
+              <button className="relative p-2.5 text-black/40 hover:text-black hover:bg-black/5 rounded-lg transition-all group">
+                <Bell className="w-4.5 h-4.5" />
+                <span className="absolute top-2 right-2.5 w-2 h-2 bg-[#FF7A45] rounded-full border-2 border-white ring-1 ring-white"></span>
               </button>
               
-              <div className="flex items-center gap-3 cursor-pointer group">
-                <div className="w-8 h-8 bg-black/5 rounded flex items-center justify-center text-black border border-black/5 transition-all group-hover:border-black/10">
-                  <User className="w-4 h-4" />
+              <div className="flex items-center gap-3 cursor-pointer group px-2 py-1.5 rounded-lg hover:bg-black/5 transition-all">
+                <div className="w-10 h-10 bg-[#FF7A45] rounded-full flex items-center justify-center text-white text-sm font-black uppercase shrink-0 shadow-sm">
+                  RC
                 </div>
-                <div className="text-left hidden xl:block">
-                  <p className="text-sm font-bold text-black leading-none">Robert Chen</p>
-                  <p className="text-[10px] text-black/30 mt-1 uppercase tracking-widest font-bold">Admin</p>
+                <div className="text-left hidden lg:block">
+                  <p className="text-sm font-black text-black leading-tight">Robert Chen</p>
+                  <p className="text-[10px] text-black/40 mt-0.5 uppercase tracking-widest font-bold">Admin</p>
                 </div>
               </div>
             </div>
