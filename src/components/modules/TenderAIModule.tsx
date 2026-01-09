@@ -5,7 +5,7 @@ import {
   Download,
   FileText,
   RefreshCw,
-  Sparkles,
+  Brain,
   Upload,
   X
 } from "lucide-react";
@@ -222,17 +222,23 @@ Reference: ${file.id}`;
   };
 
   return (
-    <div className="flex flex-col h-full bg-white overflow-hidden font-['Nunito_Sans'] text-black">
+    <div className="p-6 space-y-8 animate-in fade-in duration-1000 max-w-[1200px] mx-auto bg-white text-black font-['Nunito_Sans']">
       {view === "upload" ? (
-      <div className="flex-1 overflow-y-auto p-6">
-        <div className="max-w-4xl mx-auto space-y-8">
+        <>
           {/* Header */}
-          <div className="space-y-2">
-            <h1 className="text-3xl font-black text-black tracking-tighter uppercase">Tender AI</h1>
-            <p className="text-black/40 font-black uppercase tracking-widest text-[12px]">
-              Upload RFQ and tender documents for AI-powered analysis
-            </p>
+          <div className="flex justify-between items-start">
+            <div className="space-y-1">
+              <h1 className="text-3xl font-black text-black tracking-tighter uppercase">Tender AI</h1>
+              <p className="text-black/40 font-bold uppercase tracking-widest text-[13px]">Intelligent Document Analysis</p>
+            </div>
+            <div className="flex gap-3">
+              <button className="flex items-center gap-2 px-4 py-1.5 bg-black/5 border border-black/5 rounded text-[12px] font-black uppercase tracking-widest hover:bg-black/10 transition-all">
+                Filters
+              </button>
+            </div>
           </div>
+          
+          <div className="space-y-8">
 
           {/* Upload Section */}
           <div
@@ -359,7 +365,7 @@ Reference: ${file.id}`;
                           onClick={() => generateTender(file.id)}
                           className="w-full flex items-center justify-center gap-2 bg-[#FF7A45] text-white px-4 py-2.5 rounded text-[11px] font-black uppercase tracking-widest hover:bg-[#F26636] transition-all"
                         >
-                          <Sparkles className="w-3 h-3" />
+                          <Brain className="w-3 h-3" />
                           Generate Tender
                         </button>
                       </div>
@@ -378,7 +384,7 @@ Reference: ${file.id}`;
                             </>
                           ) : (
                             <>
-                              <Sparkles className="w-4 h-4 text-[#FF7A45]" />
+                              <Brain className="w-4 h-4 text-[#FF7A45]" />
                               <h5 className="text-[12px] font-black text-black uppercase tracking-widest">
                                 Key Insights
                               </h5>
@@ -407,19 +413,6 @@ Reference: ${file.id}`;
                             ))
                           )}
                         </ul>
-                        
-                        {/* Show button only when completed */}
-                        {file.status === "completed" ? (
-                          <button
-                            onClick={() => downloadInsights(file)}
-                            className="w-full mt-2 flex items-center justify-center gap-2 bg-[#00A86B] text-white px-4 py-2 rounded text-[11px] font-black uppercase tracking-widest hover:bg-[#008F5A] transition-all"
-                          >
-                            <Download className="w-3 h-3" />
-                            Download Tender
-                          </button>
-                        ) : (
-                          <div className="h-9 bg-black/10 rounded animate-pulse mt-4" />
-                        )}
                       </div>
                     )}
                   </div>
@@ -440,8 +433,8 @@ Reference: ${file.id}`;
               </p>
             </div>
           )}
-        </div>
-      </div>
+          </div>
+        </>
       ) : (
         <div className="flex-1 overflow-y-auto p-6">
           <div className="max-w-4xl mx-auto space-y-8">
@@ -491,7 +484,7 @@ Reference: ${file.id}`;
             {generatingStatus === "generating" && (
               <div className="bg-white border-2 border-black rounded-lg p-8 space-y-6">
                 <div className="flex items-center gap-3">
-                  <Sparkles className="w-6 h-6 text-[#FF7A45] animate-pulse" />
+                  <Brain className="w-6 h-6 text-[#FF7A45] animate-pulse" />
                   <h3 className="text-xl font-black text-black tracking-tighter uppercase">
                     Generating Tender...
                   </h3>

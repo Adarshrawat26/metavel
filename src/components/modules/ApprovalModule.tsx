@@ -16,11 +16,11 @@ export function ApprovalModule({ onNavigate }: { onNavigate: (page: any) => void
   ];
 
   return (
-    <div className="p-6 space-y-8 animate-in fade-in duration-1000 max-w-[1200px] mx-auto bg-white font-['Nunito_Sans'] text-black">
+    <div className="p-6 space-y-8 animate-in fade-in duration-1000 max-w-[1200px] mx-auto bg-white text-black font-['Nunito_Sans']">
       <div className="flex justify-between items-start">
         <div className="space-y-1">
           <h1 className="text-3xl font-black text-black tracking-tighter uppercase">Approvals</h1>
-          <p className="text-black/40 font-black uppercase tracking-widest text-[12px]">Governance & Authorization Queue</p>
+          <p className="text-black/40 font-bold uppercase tracking-widest text-[13px]">Governance & Authorization Queue</p>
         </div>
         <div className="flex bg-black/5 rounded p-1">
           <button className="bg-[#FF7A45] text-white px-3 py-1 text-[12px] font-black uppercase tracking-widest rounded shadow-sm">My Desk</button>

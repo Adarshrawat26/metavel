@@ -28,6 +28,23 @@ export function GenerateModule({ onNavigate }: { onNavigate: (page: any) => void
     <div className="flex flex-col h-full bg-white overflow-hidden font-['Nunito_Sans'] text-black">
       <StageIndicator currentStage={2} />
       
+      {/* Header */}
+      <div className="px-6 pt-6 pb-4 border-b border-black/5">
+        <div className="flex justify-between items-start">
+          <div className="space-y-1">
+            <h1 className="text-3xl font-black text-black tracking-tighter uppercase">Generate</h1>
+            <p className="text-black/40 font-bold uppercase tracking-widest text-[13px]">AI-Powered Contract Drafting</p>
+          </div>
+          <button 
+            onClick={() => onNavigate("requests")}
+            className="flex items-center gap-2 px-4 py-1.5 bg-black/5 border border-black/5 rounded text-[12px] font-black uppercase tracking-widest hover:bg-black/10 transition-all"
+          >
+            <ChevronLeft className="w-3 h-3" />
+            Back to Request
+          </button>
+        </div>
+      </div>
+
       <div className="flex-1 flex overflow-hidden">
         {/* Left Column: Form */}
         <div className="w-[350px] bg-white border-r border-black/5 overflow-y-auto p-6">

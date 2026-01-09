@@ -1,6 +1,10 @@
 import {
     Calendar,
     ChevronDown,
+    CheckCircle2,
+    Clock,
+    AlertCircle,
+    FolderOpen,
     Plus
 } from "lucide-react";
 import { useMemo, useState } from "react";
@@ -77,56 +81,61 @@ export function Dashboard({ onNavigate }: { onNavigate: (page: any) => void }) {
   , [selectedPerson]);
 
   return (
-    <div className="p-6 space-y-8 animate-in fade-in duration-1000 max-w-[1200px] mx-auto bg-white text-black font-['Nunito_Sans']">
+    <div className="p-8 space-y-10 animate-in fade-in duration-1000 max-w-[1400px] mx-auto bg-white text-black font-['Nunito_Sans']">
       {/* Header */}
       <div className="flex justify-between items-start">
-        <div className="space-y-1">
-          <h1 className="text-3xl font-black text-black tracking-tighter uppercase">Operations</h1>
-          <p className="text-black/40 font-bold uppercase tracking-widest text-[13px]">Real-time Contractual Performance</p>
+        <div className="space-y-2">
+          <h1 className="text-4xl font-black text-black tracking-tighter uppercase">Operations</h1>
+          <p className="text-black/40 font-bold uppercase tracking-widest text-sm">Real-time Contractual Performance</p>
         </div>
         <div className="flex gap-3">
-          <button className="flex items-center gap-2 px-4 py-1.5 bg-black/5 border border-black/5 rounded text-[12px] font-black uppercase tracking-widest hover:bg-black/10 transition-all">
-            <Calendar className="w-3 h-3" /> Jan 2026
+          <button className="flex items-center gap-2 px-5 py-2 bg-black/5 border border-black/5 rounded-lg text-[12px] font-black uppercase tracking-widest hover:bg-black/10 transition-all">
+            <Calendar className="w-4 h-4" /> Jan 2026
           </button>
-          <button className="flex items-center gap-2 px-4 py-1.5 bg-[#FF7A45] text-white rounded text-[12px] font-black uppercase tracking-widest hover:bg-[#F26636] transition-all">
-            <Plus className="w-3 h-3" /> New Project
+          <button className="flex items-center gap-2 px-5 py-2 bg-[#FF7A45] text-white rounded-lg text-[12px] font-black uppercase tracking-widest hover:bg-[#F26636] transition-all shadow-sm hover:shadow-md">
+            <Plus className="w-4 h-4" /> New Project
           </button>
         </div>
       </div>
 
       {/* KPI Row */}
-      <div className="grid grid-cols-5 gap-4 border-y border-black/5 py-6">
+      <div className="grid grid-cols-5 gap-6 border-y border-black/5 py-8">
         {[
-          { label: "Total Projects", value: "42" },
-          { label: "Due Today", value: "5" },
-          { label: "This Week", value: "12" },
-          { label: "Overdue", value: "3" },
-          { label: "Completed", value: "156" },
+          { label: "Total Projects", value: "42", icon: FolderOpen, color: "text-black" },
+          { label: "Due Today", value: "5", icon: Clock, color: "text-[#FF7A45]" },
+          { label: "This Week", value: "12", icon: Calendar, color: "text-black/60" },
+          { label: "Overdue", value: "3", icon: AlertCircle, color: "text-red-500" },
+          { label: "Completed", value: "156", icon: CheckCircle2, color: "text-green-600" },
         ].map((kpi, i) => (
-          <div key={i} className="space-y-1">
-            <p className="text-[12px] font-black text-black/30 uppercase tracking-[0.15em]">{kpi.label}</p>
-            <h3 className="text-2xl font-black text-black">{kpi.value}</h3>
+          <div key={i} className="group space-y-3 p-4 rounded-lg border border-black/5 hover:border-black/10 hover:bg-black/[0.02] transition-all cursor-pointer">
+            <div className="flex items-center justify-between">
+              <kpi.icon className={`w-5 h-5 ${kpi.color} opacity-60 group-hover:opacity-100 transition-opacity`} />
+            </div>
+            <div className="space-y-1">
+              <p className="text-[11px] font-black text-black/40 uppercase tracking-[0.2em] leading-tight">{kpi.label}</p>
+              <h3 className="text-3xl font-black text-black tabular-nums">{kpi.value}</h3>
+            </div>
           </div>
         ))}
       </div>
 
       {/* Performance Section */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        <div className="lg:col-span-2 space-y-6">
-          <div className="flex items-center justify-between border-b border-black/5 pb-4">
+        <div className="lg:col-span-2 space-y-6 p-6 border border-black/5 rounded-lg bg-white">
+          <div className="flex items-center justify-between border-b border-black/5 pb-5">
             <div className="flex items-center gap-4">
-              <h2 className="text-lg font-black text-black uppercase tracking-tight">Performance</h2>
+              <h2 className="text-xl font-black text-black uppercase tracking-tight">Performance</h2>
               <div className="relative">
                 <select 
                   value={selectedProjectId}
                   onChange={(e) => setSelectedProjectId(Number(e.target.value))}
-                  className="appearance-none bg-black/5 border border-transparent rounded px-3 py-1 pr-8 text-[12px] font-black uppercase tracking-widest text-black outline-none cursor-pointer hover:bg-black/10 transition-all"
+                  className="appearance-none bg-black/5 border border-transparent rounded-lg px-4 py-2 pr-8 text-[12px] font-black uppercase tracking-widest text-black outline-none cursor-pointer hover:bg-black/10 transition-all"
                 >
                   {PROJECTS.map(p => (
                     <option key={p.id} value={p.id}>{p.name}</option>
                   ))}
                 </select>
-                <ChevronDown className="absolute right-2 top-1/2 -translate-y-1/2 w-3 h-3 text-black/20 pointer-events-none" />
+                <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-black/30 pointer-events-none" />
               </div>
             </div>
           </div>
@@ -174,8 +183,8 @@ export function Dashboard({ onNavigate }: { onNavigate: (page: any) => void }) {
         </div>
 
         {/* Task List */}
-        <div className="space-y-6">
-          <h2 className="text-lg font-black text-black uppercase tracking-tight border-b border-black/5 pb-4">Tasks</h2>
+        <div className="space-y-6 p-6 border border-black/5 rounded-lg bg-white">
+          <h2 className="text-xl font-black text-black uppercase tracking-tight border-b border-black/5 pb-5">Tasks</h2>
           <div className="space-y-4">
             {[
               { task: "Finalize MSA Redlines", project: "Global Steel", status: "In Progress", priority: "High" },
@@ -183,20 +192,29 @@ export function Dashboard({ onNavigate }: { onNavigate: (page: any) => void }) {
               { task: "E-Signature Collection", project: "Mining Lease", status: "Blocked", priority: "Critical" },
               { task: "Update Payment Terms", project: "Global Steel", status: "In Progress", priority: "Medium" },
             ].map((task, i) => (
-              <div key={i} className="group cursor-pointer border-b border-black/5 pb-3 last:border-0">
-                <div className="flex items-start justify-between">
-                  <div className="space-y-0.5">
-                    <h4 className="text-[13px] font-black text-black uppercase tracking-widest group-hover:opacity-60 transition-opacity">{task.task}</h4>
-                    <p className="text-[12px] text-black/30 font-bold uppercase tracking-[0.15em]">{task.project}</p>
+              <div key={i} className="group cursor-pointer p-3 rounded-lg border border-black/5 hover:border-black/10 hover:bg-black/[0.02] transition-all">
+                <div className="flex items-start justify-between gap-3">
+                  <div className="space-y-1 flex-1">
+                    <h4 className="text-sm font-black text-black uppercase tracking-widest group-hover:text-[#FF7A45] transition-colors">{task.task}</h4>
+                    <p className="text-[12px] text-black/40 font-bold uppercase tracking-[0.15em]">{task.project}</p>
+                    <span className={`inline-block text-[10px] font-black uppercase tracking-widest px-2 py-0.5 rounded-sm mt-1 ${
+                      task.status === 'In Progress' ? 'bg-[#FF7A45]/10 text-[#FF7A45]' :
+                      task.status === 'Pending' ? 'bg-black/5 text-black/40' :
+                      'bg-red-500/10 text-red-500'
+                    }`}>
+                      {task.status}
+                    </span>
                   </div>
-                  <div className={`w-1 h-1 rounded-full mt-1 ${
-                    task.priority === 'Critical' ? 'bg-black' : 'bg-black/10'
+                  <div className={`w-2 h-2 rounded-full mt-1.5 shrink-0 ${
+                    task.priority === 'Critical' ? 'bg-red-500' :
+                    task.priority === 'High' ? 'bg-[#FF7A45]' :
+                    'bg-black/20'
                   }`} />
                 </div>
               </div>
             ))}
           </div>
-          <button className="w-full py-2 bg-black/5 text-black rounded text-[12px] font-black uppercase tracking-widest hover:bg-black/10 transition-all border border-black/5">
+          <button className="w-full py-2.5 bg-black/5 text-black rounded-lg text-[12px] font-black uppercase tracking-widest hover:bg-black/10 transition-all border border-black/5 mt-4">
             View All
           </button>
         </div>

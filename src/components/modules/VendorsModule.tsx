@@ -11,11 +11,9 @@ import {
     Star,
     Users
 } from "lucide-react";
-import { useState } from "react";
+import React, { useState } from "react";
 
 export function VendorsModule({ onNavigate }: { onNavigate: (page: any) => void }) {
-  const [activeVendor, setActiveVendor] = useState<any>(null);
-
   const vendors = [
     { name: "SteelCraft Ltd", category: "Raw Materials", rating: 4.8, status: "Preferred", location: "Sheffield, UK" },
     { name: "Global Pumps SA", category: "Equipment", rating: 4.5, status: "Preferred", location: "Stuttgart, DE" },
@@ -24,12 +22,23 @@ export function VendorsModule({ onNavigate }: { onNavigate: (page: any) => void 
     { name: "FastFreight", category: "Logistics", rating: 3.8, status: "On Watch", location: "Rotterdam, NL" },
   ];
 
+  const [activeVendor, setActiveVendor] = useState<any>(vendors[0]);
+
+  const getInitials = (name: string) => {
+    return name.split(' ').map(n => n[0]).join('').toUpperCase().substring(0, 2);
+  };
+
+  const getColor = (name: string) => {
+    const colors = ['#FF7A45', '#4A90E2', '#50C878', '#9B59B6', '#E74C3C'];
+    return colors[name.length % colors.length];
+  };
+
   return (
-    <div className="p-6 max-w-[1400px] mx-auto space-y-8 animate-in fade-in duration-1000 font-['Nunito_Sans'] text-black bg-white">
+    <div className="p-6 space-y-8 animate-in fade-in duration-1000 max-w-[1200px] mx-auto bg-white text-black font-['Nunito_Sans']">
       <div className="flex justify-between items-start">
         <div className="space-y-1">
           <h1 className="text-3xl font-black text-black tracking-tighter uppercase">Directory</h1>
-          <p className="text-black/40 font-black uppercase tracking-widest text-[12px]">Strategic Vendor ecosystem</p>
+          <p className="text-black/40 font-bold uppercase tracking-widest text-[13px]">Strategic Vendor Ecosystem</p>
         </div>
         <button className="bg-[#FF7A45] text-white px-6 py-1.5 rounded text-[12px] font-black uppercase tracking-widest hover:bg-[#F26636] transition-all">
           Onboard Vendor
@@ -43,7 +52,7 @@ export function VendorsModule({ onNavigate }: { onNavigate: (page: any) => void 
             <Search className="w-3 h-3 text-black/20 absolute left-2 top-1/2 -translate-y-1/2" />
             <input 
               type="text" 
-              placeholder="SEARCH..." 
+              placeholder="Search vendors by name or category..." 
               className="w-full bg-black/5 border-none rounded py-1.5 pl-7 pr-3 text-[12px] font-black uppercase tracking-widest focus:ring-1 focus:ring-black outline-none transition-all"
             />
           </div>
@@ -79,8 +88,8 @@ export function VendorsModule({ onNavigate }: { onNavigate: (page: any) => void 
             <div className="animate-in fade-in duration-500 space-y-8">
               <div className="flex justify-between items-start">
                 <div className="flex gap-5 items-center">
-                  <div className="w-16 h-16 bg-[#FF7A45] text-white rounded-sm flex items-center justify-center text-2xl font-black">
-                    {activeVendor.name.charAt(0)}
+                  <div className="w-16 h-16 text-white rounded-sm flex items-center justify-center text-2xl font-black" style={{ backgroundColor: getColor(activeVendor.name) }}>
+                    {getInitials(activeVendor.name)}
                   </div>
                   <div className="space-y-2">
                     <h2 className="text-2xl font-black text-black tracking-tighter uppercase">{activeVendor.name}</h2>
@@ -143,7 +152,7 @@ export function VendorsModule({ onNavigate }: { onNavigate: (page: any) => void 
                 <div className="space-y-4 border border-black/5 rounded p-5">
                   <div className="flex justify-between items-center">
                     <h3 className="text-[12px] font-black uppercase tracking-[0.2em] text-black/30">Compliance</h3>
-                    <AlertTriangle className="w-3 h-3 text-black/10" />
+                    <AlertTriangle className="w-3 h-3 text-amber-500" />
                   </div>
                   <div className="space-y-3">
                     <div className="p-3 bg-black/[0.02] border border-black/5 rounded space-y-1">
